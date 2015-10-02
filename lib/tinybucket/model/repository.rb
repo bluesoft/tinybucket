@@ -22,6 +22,11 @@ module Tinybucket
         inject_repo_keys(list)
       end
 
+      def branches_tags()
+        list = pull_requests_api(options).list(options)
+        inject_repo_keys(list)
+      end
+
       def pull_request(pullrequest_id = nil, options = {})
         m = if pullrequest_id.present?
               pull_requests_api(options).find(pullrequest_id, options)
@@ -68,6 +73,10 @@ module Tinybucket
       end
 
       private
+
+      def branches_tags_api(options)
+        create_api('BranchesTags', repo_key, options)
+      end
 
       def pull_requests_api(options)
         create_api('PullRequests', repo_keys, options)
